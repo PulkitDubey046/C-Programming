@@ -168,19 +168,62 @@ void delete_from_start()
     printf("Deleted successfully.\n");
 }
 
-void delete_from_end(){ 
-    if(head==NULL){
+void delete_from_end()
+{
+    if (head == NULL)
+    {
         printf("List is empty. Nothing to delete.\n");
         return;
     }
     struct Node *temp, *prev;
-    temp=head;
-    while(temp->next!=NULL){
+    temp = head;
+    while (temp->next != NULL)
+    {
         prev = temp;
         temp = temp->next;
     }
-    prev->next=NULL;
+    prev->next = NULL;
     free(temp);
+    printf("Deleted successfully.\n");
+}
+
+void delete_by_position()
+{
+    int pos;
+    printf("Enter the position:");
+    scanf("%d", &pos);
+
+    if (head == NULL)
+    {
+        printf("List is empty. Nothing to delete.\n");
+        return;
+    }
+
+    if (pos == 1) {
+        struct Node *temp = head;
+        head = head->next;
+        free(temp);
+        printf("Deleted successfully.\n");
+        return;
+    }
+
+    int i = 1;
+    struct Node *temp = head;
+    while (i < pos - 1 && temp->next != NULL)
+    {
+        temp = temp->next;
+        i++;
+    }
+
+    if (temp->next == NULL)
+    {
+        printf("Position out of range.\n");
+        return;
+    }
+
+    struct Node *nextNode = temp->next;
+    temp->next = nextNode->next;
+    free(nextNode);
     printf("Deleted successfully.\n");
 }
 
@@ -236,8 +279,9 @@ void linkedlist_deletion()
         printf("\nHow to delete:\n");
         printf("1. Delete from end\n");
         printf("2. Delete from beggining\n");
-        printf("3. Delete given value\n");
-        printf("4. Exit\n");
+        printf("3. Delete given position\n");
+        printf("4. Delete given value\n");
+        printf("5. Exit\n");
         printf("Enter your choice:");
         scanf("%d", &choice);
         switch (choice)
@@ -253,11 +297,16 @@ void linkedlist_deletion()
             printf("\n");
             break;
         case 3:
-            delete_by_value();
+            delete_by_position();
             display_linked_list();
             printf("\n");
             break;
         case 4:
+            delete_by_value();
+            display_linked_list();
+            printf("\n");
+            break;
+        case 5:
             return;
             break;
         default:
