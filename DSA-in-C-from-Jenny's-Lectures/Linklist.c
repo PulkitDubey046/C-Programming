@@ -316,6 +316,17 @@ void linkedlist_deletion()
     }
 }
 
+void get_length(){
+    int length = 0;
+    struct Node *temp = head;
+    while (temp != NULL)
+    {
+        length++;
+        temp = temp->next;
+    }
+    printf("Length of linked list: %d\n", length);
+}
+
 int main(void)
 {
     while (1)
@@ -326,7 +337,8 @@ int main(void)
         printf("1. Insert Linked List\n");
         printf("2. Display Linked List\n");
         printf("3. Delete Linked List\n");
-        printf("4. Exit\n");
+        printf("4. Find the length of Linked List");
+        printf("5. Exit\n");
         printf("Enter choice: ");
 
         scanf("%d", &choice);
@@ -343,6 +355,9 @@ int main(void)
             linkedlist_deletion();
             break;
         case 4:
+            get_length();
+            break;
+        case 5:
             exit(0);
         default:
             printf("Invalid choice! Please try again.\n");
