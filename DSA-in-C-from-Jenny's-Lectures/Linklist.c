@@ -316,6 +316,7 @@ void linkedlist_deletion()
     }
 }
 
+// length of linked list
 void get_length(){
     int length = 0;
     struct Node *temp = head;
@@ -327,6 +328,24 @@ void get_length(){
     printf("Length of linked list: %d\n", length);
 }
 
+// reverse linked list
+void reverse_linked_list(){
+    struct Node *prev = NULL;
+    struct Node *current = head;
+    struct Node *next = NULL;
+
+    while (current != NULL)
+    {
+        next = current->next;
+        current->next = prev;
+        prev = current;
+        current = next;
+    }
+    head = prev;
+    printf("Linked list reversed successfully.\n");
+}
+
+
 int main(void)
 {
     while (1)
@@ -337,8 +356,9 @@ int main(void)
         printf("1. Insert Linked List\n");
         printf("2. Display Linked List\n");
         printf("3. Delete Linked List\n");
-        printf("4. Find the length of Linked List");
-        printf("5. Exit\n");
+        printf("4. Find the length of Linked List\n");
+        printf("5. Reverse a linklist\n");
+        printf("6. Exit\n");
         printf("Enter choice: ");
 
         scanf("%d", &choice);
@@ -358,6 +378,9 @@ int main(void)
             get_length();
             break;
         case 5:
+            reverse_linked_list();
+            break;
+        case 6:
             exit(0);
         default:
             printf("Invalid choice! Please try again.\n");
