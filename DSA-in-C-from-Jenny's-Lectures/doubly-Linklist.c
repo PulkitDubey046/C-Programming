@@ -7,8 +7,9 @@ struct Node{
     struct Node* next;
 };
   
-struct Node* head;
+struct Node* head, *tail = NULL;
 
+// display function
 void display(){
     if(head==NULL){
         printf("List is empty...");
@@ -33,17 +34,15 @@ void insert_end(){
         scanf("%d",&newNode->data);
         newNode->next=NULL;
         newNode->prev=NULL;
-        struct Node * temp;
         if(head==NULL){
-            head=temp=newNode;
+            head=tail=newNode;
         }
         else{
-            temp->next= newNode;
-            newNode->prev = temp;
-            temp=newNode;
+            tail->next= newNode;
+            newNode->prev = tail;
+            tail=newNode;
         }
-
-        printf("Inserted Successfully..");
+        printf("Inserted Successfully..\n");
         printf("Do you want to enter again(0,1): ");
         scanf("%d", &choice);
     }
@@ -60,7 +59,7 @@ void insert_start(){
         newNode->prev=NULL;
         newNode->next=NULL;
         if(head==NULL){
-            head=newNode;
+            head=tail=newNode;
         }
         else{
             head->prev=newNode;
@@ -68,9 +67,38 @@ void insert_start(){
             head=newNode;
         }
 
-        printf("Inserted Successfully..");
+        printf("Inserted Successfully..\n");
         printf("Do you want to enter again(0,1):");
         scanf("%d", &choice);
+    }
+}
+
+// insert at given position
+void insert_position(){
+    int pos, i=1;
+    struct Node *newNode=(struct Node*)malloc(sizeof(struct Node));
+    printf("Enter value to enter:");
+    scanf("%d",& newNode->data);
+    newNode->prev=NULL;
+    newNode->next=NULL;
+    printf("Enter position to insert:");
+    scanf("%d",&pos);
+    struct Node *temp=head;
+    while(i<pos-1 && temp!=NULL){
+        temp=temp->next;
+        i++;
+    }
+    if(temp==NULL){
+        printf("Position not found\n");
+    }
+    else{
+        newNode->next=temp->next;
+        newNode->prev=temp;
+        if(temp->next!=NULL){
+            temp->next->prev=newNode;
+        }
+        temp->next=newNode;
+        printf("Inserted Successfully..\n");
     }
 }
 
@@ -81,7 +109,8 @@ void insert_option(){
         printf("Choose the operation you want to perform: \n");
         printf("1. Insert at start \n");
         printf("2. Insert at end \n");
-        printf("3. Exit\n");
+        printf("3. Insert at given position \n");
+        printf("4. Exit\n");
         printf("Enter your choice: ");
         scanf("%d",&a);
         switch (a)
@@ -94,11 +123,17 @@ void insert_option(){
             insert_end();
             display();
             break;
+        case 3:
+            insert_position();
+            display();
+            break;
         default:
             break;
         }
     }
 }
+
+
 
 int main(){
     int a;
