@@ -127,13 +127,119 @@ void insert_option(){
             insert_position();
             display();
             break;
+        case 4:
+            return;
+            break;
         default:
             break;
         }
     }
 }
 
+// delete from start
+void delete_start(){
+    if(head==NULL){
+        printf("List is empty, deletion not possible..\n");
+        return;
+    }
+    struct Node *temp=head;
+    head=head->next;
+    if(head!=NULL){
+        head->prev=NULL;
+    }
+    else{
+        tail=NULL;
+    }
+    free(temp);
+    printf("Deleted Successfully..\n");
+}
 
+//delete from given position
+void delete_position(){
+    int pos, i=1;
+    printf("Enter position to delete:");
+    scanf("%d",&pos);
+    struct Node *temp=head;
+    if(head==NULL){
+        printf("List is empty, deletion not possible..\n");
+        return;
+    }
+    if(pos==1){
+        delete_start();
+        return;
+    }
+    while(i<pos && temp!=NULL){
+        temp=temp->next;
+        i++;
+    }
+    if(temp==NULL){
+        printf("Position not found\n");
+    }
+    else{
+        temp->prev->next=temp->next;
+        if(temp->next!=NULL){
+            temp->next->prev=temp->prev;
+        }
+        else{
+            tail=temp->prev;
+        }
+        free(temp);
+        printf("Deleted Successfully..\n");
+    }
+}
+
+// delete from end
+void delete_end(){
+    if(head==NULL){
+        printf("List is empty, deletion not possible..\n");
+    }
+    struct Node *temp=tail;
+    tail=tail->prev;
+    if(tail!=NULL){
+        tail->next=NULL;
+    }
+    else{
+        head=NULL;
+    }
+    free(temp);
+    printf("Deleted Successfully..\n");   
+}
+
+
+
+// delete calling 
+void delete_option(){
+    int a;
+    while(1){
+        printf("Choose the operation you want to perform: \n");
+        printf("1. Delete from start \n");
+        printf("2. Delete from end \n");
+        printf("3. Delete from given position \n");
+        printf("4. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d",&a);
+        switch (a)
+        {
+        case 1:
+            delete_start();
+            display();
+            break;
+        case 2:
+            delete_end();
+            display();
+            break;
+        case 3:
+            delete_position();
+            display();
+            break;
+        case 4:
+            return;
+            break;
+        default:
+            break;
+        }
+    }
+}
 
 int main(){
     int a;
@@ -141,7 +247,8 @@ int main(){
         printf("Choose the operation you want to perform: \n");
         printf("1. Insert \n");
         printf("2. Display \n");
-        printf("3. Exit\n");
+        printf("3. Delete\n");
+        printf("4. Exit\n");
         printf("Enter your choice: ");
         scanf("%d",&a);
         switch (a)
@@ -151,6 +258,12 @@ int main(){
             break;
         case 2:
             display();
+            break;
+        case 3:
+            delete_option();
+            break;
+        case 4:
+            return 0;
             break;
         default:
             break;
