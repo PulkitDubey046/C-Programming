@@ -241,6 +241,24 @@ void delete_option(){
     }
 }
 
+// reverse the doubly linked list
+void reverse(){
+    struct Node *current=head;
+    struct Node *temp=NULL;
+    while(current!=NULL){
+        temp=current->prev;
+        current->prev=current->next;
+        current->next=temp;
+        current=current->prev;
+    }
+    if(temp!=NULL){
+        head=temp->prev;
+    }
+    printf("Reversed Successfully..\n");
+    display();
+}
+
+// main function
 int main(){
     int a;
     while(1){
@@ -248,7 +266,8 @@ int main(){
         printf("1. Insert \n");
         printf("2. Display \n");
         printf("3. Delete\n");
-        printf("4. Exit\n");
+        printf("4. Reverse\n");
+        printf("5. Exit\n");
         printf("Enter your choice: ");
         scanf("%d",&a);
         switch (a)
@@ -263,6 +282,9 @@ int main(){
             delete_option();
             break;
         case 4:
+            reverse();
+            break;
+        case 5:
             return 0;
             break;
         default:
