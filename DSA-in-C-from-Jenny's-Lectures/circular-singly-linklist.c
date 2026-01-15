@@ -65,25 +65,23 @@ void insert_at_end()
     }
 }
 
+
 int getlength()
 {
-    int l = 0;
-    if (tail == 0)
+    if (tail == NULL)
+        return 0;
+
+    int l = 1;
+    struct node *temp = tail->next;
+
+    while (temp != tail)
     {
-        return l;
+        l++;
+        temp = temp->next;
     }
-    else
-    {
-        struct node *temp;
-        temp = tail->next;
-        while (temp != tail)
-        {
-            l++;
-            temp = temp->next;
-        }
-        return l;
-    }
+    return l;
 }
+
 
 // insert at given position
 void insert_pos()
@@ -166,89 +164,106 @@ void linkedlist_insertion()
     }
 }
 
-void delete_from_end(){
+void delete_from_end()
+{
     struct node *current, *previous;
-    current=tail->next;
-    if(tail==NULL){
+    current = tail->next;
+    if (tail == NULL)
+    {
         printf("List is empty.");
     }
-    else if(current->next == current){
-        tail=NULL;
+    else if (current->next == current)
+    {
+        tail = NULL;
         free(current);
         return;
     }
-    else{
-        while(current->next!=tail->next){
-            previous=current;
-            current=current->next;
+    else
+    {
+        while (current->next != tail->next)
+        {
+            previous = current;
+            current = current->next;
         }
-        previous->next=tail->next;
-        tail=previous;
+        previous->next = tail->next;
+        tail = previous;
         free(current);
     }
 }
 
 // Delete from begining
-void delete_beg(){
-    struct node *temp=tail->next;
-    if(tail==NULL){
+void delete_beg()
+{
+    struct node *temp = tail->next;
+    if (tail == NULL)
+    {
         printf("List is empty.");
     }
-    else if(tail->next == tail){
-        tail=NULL;
+    else if (tail->next == tail)
+    {
+        tail = NULL;
         free(temp);
     }
-    else{
-        tail->next=temp->next;
+    else
+    {
+        tail->next = temp->next;
         free(temp);
     }
 }
 
 // Delete from positon
-void delete_from_Pos(){
+void delete_from_Pos()
+{
     struct node *current, *nextnode;
-    int pos, i=1, l;
-    current=tail->next;
+    int pos, i = 1, l;
+    current = tail->next;
     printf("Enter position:");
-    scanf("%d",&pos);
-    l=getlength();
-    if(l==0){
+    scanf("%d", &pos);
+    l = getlength();
+    if (l == 0)
+    {
         printf("List is empty");
     }
-    else if(pos<1 || pos>l){
+    else if (pos < 1 || pos > l)
+    {
         printf("Invalid position.");
     }
-    else if(pos==1){
+    else if (pos == 1)
+    {
         delete_beg();
     }
-    else{
-        while(i<pos-1){
+    else
+    {
+        while (i < pos - 1)
+        {
             current = current->next;
             i++;
         }
-        nextnode=current->next;
-        current->next=nextnode->next;
+        nextnode = current->next;
+        current->next = nextnode->next;
         free(nextnode);
     }
 }
 
-
 // Reverse a circular singly linked list
-void reverse_linked_list(){
-    struct node * current, *nextnode, *prev;
+void reverse_linked_list()
+{
+    struct node *current, *nextnode, *prev;
     current = tail->next;
-    nextnode=current->next;
-    if(tail==0){
+    nextnode = current->next;
+    if (tail == 0)
+    {
         printf("List is empty.");
     }
-    while(current!=tail){
-        prev= current;
+    while (current != tail)
+    {
+        prev = current;
         current = nextnode;
-        nextnode=current->next;
-        current->next=prev;
+        nextnode = current->next;
+        current->next = prev;
     }
-    nextnode->next=tail;
-    tail=nextnode;
+    nextnode->next = tail;
+    tail = nextnode;
 }
 
 // Deletion of linkedlist
