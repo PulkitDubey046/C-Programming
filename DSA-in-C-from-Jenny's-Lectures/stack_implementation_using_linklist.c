@@ -1,52 +1,58 @@
-// Stack implementation using array
+// Implementaion of stack using linked list
+
 #include<stdio.h>
-# define N 10
+#include<stdlib.h>
+#include<limits.h>
 
-int stack[N];
-int top = -1;
+struct node{
+    int data;
+    struct node* link;
+};
+struct node* top = NULL;
 
-void push(){
-    int x;
-    printf("Enter data:");
-    scanf("%d",&x);
-    if(top==N-1){
+void push(int x){
+    if(top != NULL && top->data == INT_MAX){
         printf("Stack Overflow\n");
         return;
     }
-    top++;
-    stack[top]=x;
+    struct node* newnode = (struct node*)malloc(sizeof(struct node));
+    newnode->data = x;
+    newnode->link = top;
+    top = newnode;
 }
 
 void pop(){
-    if(top==-1){
+    if(top == NULL){
         printf("Stack Underflow\n");
         return;
     }
-    printf("Popped element is %d\n",stack[top]);
-    top--;
+    struct node* temp = top;
+    top = top->link;
+    free(temp);
 }
 
 void peek(){
-    if(top==-1){
+    if(top == NULL){
         printf("Stack is empty\n");
         return;
     }
-    printf("Top element is %d\n",stack[top]);
+    printf("%d",top->data);
 }
 
 void display(){
-    if(top==-1){
+    if(top == NULL){
         printf("Stack is empty\n");
         return;
     }
-    printf("Stack elements are:\n");
-    for(int i=top;i>=0;i--){
-        printf("%d\n",stack[i]);
+    struct node* temp = top;
+    while(temp != NULL){
+        printf("%d ",temp->data);
+        temp = temp->link;
     }
-}   
+}
 
 int main(){
-    int choice;
+    int choice, x;
     while(1){
         printf("\n---- Stack Operations ----\n");
         printf("1. Push\n");
@@ -59,7 +65,9 @@ int main(){
 
         switch(choice){
             case 1:
-                push();
+                printf("Enter the value to push:");
+                scanf("%d",&x);
+                push(x);
                 break;
             case 2:
                 pop();
